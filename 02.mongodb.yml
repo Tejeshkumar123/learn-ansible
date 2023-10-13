@@ -1,0 +1,25 @@
+- name: creating mongodb server
+  hosts: all
+  become: yes
+  tasks:
+    - name: DOWNLOADING MONGODB REPO
+      ansible.builtin.copy:
+        src: mongodb.repo
+        dest: /etc/yum.repos.d/mongodb.repo
+
+    - name: Installing the mongodb server
+      ansible.builtin.yum:
+        name: mongodb
+        state: latest
+
+    - name: CHANGING THE LISTEN ADDRESS
+      ansible.builtin.replace:
+        path: /etc/mongod.conf
+        regexp: '127.0.0.1'
+        replace: '0.0.0.0'
+
+    - name: ENABLEING AND RESTARTING mongod
+      ansible.builtin.service:
+        name: mongod
+        state: restarted
+        enabled: yes
