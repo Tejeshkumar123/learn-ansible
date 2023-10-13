@@ -6,6 +6,7 @@
       ansible.builtin.yum:
         name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
         state: latest
+        disable_gpg_check: true
 
     - name: Enabling Redis-6.2 from package
       ansible.builtin.service:
