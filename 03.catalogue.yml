@@ -25,10 +25,10 @@
         dest: /app
         remote_src: yes
 
-    - name: Installing the npm server
-      ansible.builtin.yum:
-        name: npm
-        state: latest
+    - name: Loading Mongo Schema
+      ansible.builtin.shell: npm install
+      args
+        chdir: /app
 
     - name: configuring catalogue service
       ansible.builtin.copy:
