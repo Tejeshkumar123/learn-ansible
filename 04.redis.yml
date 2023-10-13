@@ -2,9 +2,9 @@
   hosts: all
   become: yes
   tasks:
-    - name: Installing the nodejs server
+    - name: Install remi repo
       ansible.builtin.yum:
-        name: redis
+        name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
         state: latest
 
     - name: Enabling Redis-6.2 from package
