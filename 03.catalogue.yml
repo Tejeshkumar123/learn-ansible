@@ -3,7 +3,7 @@
   become: yes
   tasks:
     - name: DOWNLOADING NODEJS REPO
-      ansible.builtin.shell: https://rpm.nodesource.com/setup_lts.x
+      ansible.builtin.shell: https://rpm.nodesource.com/setup_lts.x | bash
 
     - name: Installing the nodejs server
       ansible.builtin.yum:
@@ -30,7 +30,7 @@
         name: npm
         state: latest
 
-    - name: configuring catalogue service\
+    - name: configuring catalogue service
       ansible.builtin.copy:
         src: catalogue.service
         dest: /etc/systemd/system/catalogue.service
@@ -46,7 +46,7 @@
         state: latest
 
     - name: Loading Mongo Schema
-      ansible.builtin.shell: mongo --host mongodb-dev.sindhu.cloud
+      ansible.builtin.shell: mongo --host mongodb-dev.sindhu.cloud </app/schema/catalogue.js
 
     - name: ENABLEING AND RESTARTING the catalogue server
       ansible.builtin.service:
