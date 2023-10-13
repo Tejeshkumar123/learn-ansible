@@ -9,7 +9,7 @@
 
     - name: Installing the mongodb server
       ansible.builtin.yum:
-        name: mongodb
+        name: mongodb-org
         state: latest
 
     - name: CHANGING THE LISTEN ADDRESS
