@@ -1,5 +1,6 @@
 - name: creating frontend server
   hosts: all
+  become: yes
   tasks:
     - name: INSTALLING NGINX SERVICE
       ansible.builtin.yum:
