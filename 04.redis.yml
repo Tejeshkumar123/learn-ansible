@@ -1,0 +1,37 @@
+- name: Creating redis server
+  hosts: all
+  become: yes
+  tasks:
+    - name: DOWNLOADING REDIS REPO
+      ansible.builtin.copy:
+        src: redis repo
+        dest: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+
+    - name: Enabling Redis-6.2 from package
+      ansible.builtin.service:
+        name: redis:remi-6.2
+        enabled: yes
+
+    - name: Installing redis server
+      ansible.builtin.yum:
+        name: redis
+        state: latest
+
+    - name: Changing the listen address
+      ansible.builtin.replace:
+        path: /etc/redis.conf
+        regexp: '127.0.0.1'
+        replace: '0.0.0.0'
+
+    - name: Changing the listen address
+      ansible.builtin.replace:
+        path: /etc/redis/redis.conf
+        regexp: '127.0.0.1'
+        replace: '0.0.0.0'
+
+    - name: Enabling and starting the redis server
+      ansible.builtin.service:
+        name: redis
+        state: restarted
+        enabled: yes
