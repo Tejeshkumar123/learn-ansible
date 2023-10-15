@@ -25,7 +25,7 @@
         dest: /app
         remote_src: yes
 
-    - name: Loading Mongo Schema
+    - name: installing npm depencences
       ansible.builtin.shell: npm install
       args:
         chdir: /app
