@@ -16,9 +16,9 @@
 
     - name: Enabling and restarting Rabbitmq Server
       ansible.builtin.systemd:
-      state: restarted
-      name: rabbitmq-server
-      enabled: true
+       state: restarted
+       name: rabbitmq-server
+       enabled: true
 
     - name: Adding Application User
       community.rabbitmq.rabbitmq_user:
