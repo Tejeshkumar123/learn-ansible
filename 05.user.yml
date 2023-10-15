@@ -1,0 +1,56 @@
+- name: creating user server
+  hosts: all
+  become: yes
+  tasks:
+    - name: DOWNLOADING NODEJS REPO
+      ansible.builtin.shell: https://rpm.nodesource.com/setup_lts.x | bash
+
+    - name: Installing the nodejs server
+      ansible.builtin.yum:
+        name: nodejs
+        state: latest
+
+    - name: Addind user
+      ansible.builtin.user:
+        name: roboshop
+
+    - name: Create a directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+
+    - name: DOWNLOADING NEW CONTENT
+      ansible.builtin.unarchive:
+        src: https://roboshop-artifacts.s3.amazonaws.com/user.zip
+        dest: /app
+        remote_src: yes
+
+    - name: Loading Mongo Schema
+      ansible.builtin.shell: npm install
+      args:
+        chdir: /app
+
+    - name: configuring user service
+      ansible.builtin.copy:
+        src: user.service
+        dest: /etc/systemd/system/user.service
+
+    - name: DOWNLOADING MONGODB REPO
+      ansible.builtin.copy:
+        src: mongodb.repo
+        dest: /etc/yum.repos.d/mongodb.repo
+
+    - name: Installing mongodb
+      ansible.builtin.yum:
+        name:  mongodb-org-shell
+        state: latest
+
+    - name: Loading Mongo Schema
+      ansible.builtin.shell: mongo --host mongodb-dev.sindhu.cloud </app/schema/user.js
+
+    - name: ENABLEING AND RESTARTING the user server
+      ansible.builtin.service:
+        name: user
+        state: restarted
+        enabled: yes
+
