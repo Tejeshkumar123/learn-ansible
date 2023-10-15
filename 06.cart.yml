@@ -1,38 +1,42 @@
-- name: creating cart server
+- name: Creating cart service
   hosts: all
   become: yes
   tasks:
     - name: DOWNLOADING NODEJS REPO
       ansible.builtin.shell: https://rpm.nodesource.com/setup_lts.x | bash
 
-    - name: Installing the nodejs server
+    - name: Installing Nodejs Service
       ansible.builtin.yum:
         name: nodejs
         state: latest
 
-    - name: Addind user
+    - name: Adding user
       ansible.builtin.user:
         name: roboshop
 
-    - name: Create a directory
+    - name: create a directory
       ansible.builtin.file:
         path: /app
         state: directory
 
-    - name: DOWNLOADING NEW CONTENT
+    - name: Downloading new app content
       ansible.builtin.unarchive:
         src: https://roboshop-artifacts.s3.amazonaws.com/cart.zip
         dest: /app
         remote_src: yes
 
-    - name: configuring cart service
+    - name: Installing npm
+      ansible.builtin.shell: npm install
+      args:
+        chdir: /app
+
+    - name: Configuring cart service
       ansible.builtin.copy:
         src: cart.service
         dest: /etc/systemd/system/cart.service
 
-    - name: ENABLEING AND RESTARTING the cart server
+    - name: Enabling and starting the cart server
       ansible.builtin.service:
         name: cart
         state: restarted
         enabled: yes
-
