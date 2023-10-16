@@ -1,0 +1,43 @@
+- name: creating payment server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install the python
+      ansible.builtin.yum:
+        name:
+           - python
+           - gcc
+           - python3-devel
+        state: latest
+
+    - name: Addind user
+      ansible.builtin.user:
+        name: roboshop
+
+    - name: Create a directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+
+    - name: DOWNLOADING NEW CONTENT
+      ansible.builtin.unarchive:
+        src: https://roboshop-artifacts.s3.amazonaws.com/payment.zip
+        dest: /app
+        remote_src: yes
+
+    - name: Installing Dependencies
+      ansible.builtin.shell: pip3.6 install -r requirements.txt
+      args:
+        chdir: /app
+
+    - name: configuring payment service
+      ansible.builtin.copy:
+        src: payment.service
+        dest: /etc/systemd/system/payment.service
+
+    - name: ENABLEING AND RESTARTING the payment server
+      ansible.builtin.service:
+        name: payment
+        state: restarted
+        enabled: yes
+
