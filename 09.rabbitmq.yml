@@ -1,4 +1,4 @@
-- name: creating frontend server
+- name: creating .sh server
   hosts: all
   become: yes
   tasks:
