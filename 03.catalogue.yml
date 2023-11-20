@@ -46,7 +46,7 @@
         state: latest
 
     - name: Loading Mongo Schema
-      ansible.builtin.shell: mongo --host mongodb-dev.sindhu.cloud </app/schema/catalogue.js
+      ansible.builtin.shell: mongo --host mongodb-dev.tejesh.cloud </app/schema/catalogue.js
 
     - name: ENABLEING AND RESTARTING the catalogue server
       ansible.builtin.service:
