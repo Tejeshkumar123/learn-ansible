@@ -43,7 +43,7 @@
         state: latest
 
     - name: Loading mysql Schema
-      ansible.builtin.shell: mysql -h mysql-dev.sindhu.cloud -uroot -pRoboShop@1 </app/schema/shipping.sql
+      ansible.builtin.shell: mysql -h mysql-dev.tejesh.cloud -uroot -pRoboShop@1 </app/schema/shipping.sql
 
     - name: Enabling and starting the shipping server
       ansible.builtin.service:
