@@ -7,7 +7,7 @@
         name: nginx
         state: latest
 
-    - name: REMOVING DEFAULT NGINX CONTENT
+    - name: REMOVE DEFAULT NGINX CONTENT
       ansible.builtin.file:
         path: /usr/share/nginx/html
         state: absent
