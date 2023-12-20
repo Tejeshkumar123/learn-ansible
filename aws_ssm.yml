@@ -1,0 +1,6 @@
+- name: print parameters
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: print parameter from parameter store
+      debug: msg="{{ lookup('aws_ssm', 'Mouni', region='us-east-1' ) }}"
