@@ -3,7 +3,7 @@
   become: yes
   tasks:
     - name: DOWNLOADING NODEJS REPO
-      ansible.builtin.shell: https://rpm.nodesource.com/setup_lts.x | bash
+      ansible.builtin.shell: https://rpm.nodesource.com/setup_19.x | sudo -E bash -
 
     - name: Installing the nodejs server
       ansible.builtin.yum:
